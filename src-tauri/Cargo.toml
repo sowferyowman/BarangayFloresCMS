@@ -1,0 +1,21 @@
+[package]
+name = "barangay-flores-cms"
+version = "0.1.0"
+description = "Barangay Flores Case Management System"
+edition = "2021"
+
+[lib]
+name = "barangay_flores_cms_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+rusqlite = { version = "0.32", features = ["bundled", "backup"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
