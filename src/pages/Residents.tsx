@@ -1,7 +1,2 @@
-import { useEffect, useState } from 'react';
-import type { Person } from '../types';
-import { age } from '../types';
-import { store } from '../lib/storage';
-import { name } from '../lib/case-utils';
-import { Empty } from '../components/common';
-export function Residents() { const [data,setData]=useState<Person[]>([]);useEffect(()=>{store.people().then(setData);},[]);return <section className="card"><h2>Residents</h2>{data.length?<div className="table-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>Gender</th><th>Age</th><th>Contact</th></tr></thead><tbody>{data.map((person,index)=><tr key={index}><td>{name(person)}</td><td>{person.role}</td><td>{person.gender}</td><td>{age(person.date_of_birth)}</td><td>{person.contact_number}</td></tr>)}</tbody></table></div>:<Empty title="No residents found."/>}</section>; }
+import { useEffect, useState } from 'react'; import type { Person } from '../types'; import { age } from '../types'; import { store } from '../lib/storage'; import { name } from '../lib/case-utils'; import { Empty, SkeletonTable } from '../components/common';
+export function Residents(){const[data,setData]=useState<Person[]>([]),[loading,setLoading]=useState(true);useEffect(()=>{store.people().then(setData).finally(()=>setLoading(false));},[]);return <section className="card"><h2>Residents</h2>{loading?<SkeletonTable rows={5}/>:data.length?<div className="table-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>Gender</th><th>Age</th><th>Contact</th></tr></thead><tbody>{data.map((person,index)=><tr key={index}><td>{name(person)}</td><td>{person.role}</td><td>{person.gender}</td><td>{age(person.date_of_birth)}</td><td>{person.contact_number}</td></tr>)}</tbody></table></div>:<Empty title="No residents found."/>}</section>;}
