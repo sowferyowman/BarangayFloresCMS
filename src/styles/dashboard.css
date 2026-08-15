@@ -1,0 +1,41 @@
+.dashboard-charts{display:grid;gap:20px}
+.dashboard-top-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.nature-cell{height:100%}
+.nature-cell .card{height:100%;display:flex;flex-direction:column}
+.line-donut-stack{display:grid;grid-template-rows:1fr 1fr;gap:20px;height:100%}
+.line-cell,.donut-cell{height:100%}
+.line-cell .card,.donut-cell .card{height:100%;display:flex;flex-direction:column;justify-content:center}
+.donut-cell .donut-wrap{margin:auto 0}
+.dashboard-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.chart-card h2{font-size:17px;margin-bottom:20px;color:#174f49}
+.horizontal-bars{display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:minmax(155px,220px) 1fr 28px;align-items:center;gap:10px}
+.bar-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#45615d}
+.bar-track{height:11px;border-radius:999px;background:#e8f1ef;overflow:hidden}
+.bar-track i{display:block;height:100%;border-radius:inherit;background:#0d8878}
+.bar-track i.blue{background:#2d7cbe}
+.bar-track i.green{background:#6cae4b}
+.bar-row b{font-size:12px;text-align:right;color:#214b46}
+@media(max-width:900px){
+  .dashboard-top-row,.dashboard-bottom-row{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:minmax(125px,185px) 1fr 28px}
+}
+.line-chart{width:100%;height:180px;overflow:visible}
+.grid-line{stroke:#e8f1ef;stroke-width:1}
+.line-area{fill:#0d887822}
+.line-stroke{stroke:#0d8878;stroke-width:2.5}
+.line-dot{fill:#0d8878;stroke:#fff;stroke-width:1.5}
+.line-chart-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#64748b}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.donut-total{font-size:22px;font-weight:700;fill:#1e3a67}
+.donut-total-label{font-size:10px;fill:#64748b}
+.donut-legend{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.donut-legend li{display:flex;align-items:center;gap:8px;font-size:12px;color:#334155}
+.donut-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.donut-legend b{margin-left:auto;color:#1e3a67}
+.dark-mode .grid-line{stroke:#3a474d}
+.dark-mode .line-chart-labels{color:#b5c3c8}
+.dark-mode .donut-total{fill:#f4f8f9}
+.dark-mode .donut-total-label{fill:#b5c3c8}
+.dark-mode .donut-legend li{color:#d8e2e5}
+.dark-mode .donut-legend b{color:#81d8c9}

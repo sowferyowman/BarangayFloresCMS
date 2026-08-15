@@ -1,0 +1,26 @@
+import type React from 'react';
+import type { Case, Person } from '../types';
+import { age } from '../types';
+
+export const person = (): Person => ({ first_name:'', middle_name:'', last_name:'', gender:'', date_of_birth:'', contact_number:'', house_building_number:'', street:'', barangay:'Flores', city_municipality:'', region:'Region IV-A' });
+export const blankCase = (): Case => ({ case_number:'', status:'Active', nature_of_case:'', case_description:'', place_of_incident:'', date_of_incident:'', time_of_incident:'', date_of_lupon_hearing:'', complainant:person(), respondent:person() });
+export const name = (person: Person) => [person.first_name, person.middle_name, person.last_name].filter(Boolean).join(' ') || 'â€”';
+
+export const caseNatures = ['Physical Injury / Assault','Threats','Harassment','Verbal Abuse','Public Disturbance','Property Damage','Theft','Boundary / Property Dispute','Land / Property Dispute','Noise Complaint','Animal-Related Complaint','Debt / Unpaid Obligation','Family / Domestic Dispute','Neighbor Dispute','Trespassing','Vandalism','Gambling-Related Complaint','Curfew Violation','Barangay Ordinance Violation','Traffic / Road-Related Complaint','Environmental / Sanitation Complaint','Other'];
+
+export const tableColumns: { id:string; label:string; value:(caseItem:Case)=>React.ReactNode }[] = [
+  {id:'case-number',label:'Case Number',value:c=><b>{c.case_number}</b>},{id:'nature',label:'Nature',value:c=>c.nature_of_case},{id:'status',label:'Status',value:c=><span className={`status ${c.status.toLowerCase()}`}>{c.status}</span>},{id:'description',label:'Description',value:c=>c.case_description},{id:'place',label:'Place of Incident',value:c=>c.place_of_incident},{id:'incident-date',label:'Incident Date',value:c=>c.date_of_incident},{id:'incident-time',label:'Incident Time',value:c=>c.time_of_incident},{id:'hearing-date',label:'Lupon Hearing',value:c=>c.date_of_lupon_hearing},
+  {id:'complainant-first-name',label:'Complainant First Name',value:c=>c.complainant.first_name},{id:'complainant-middle-name',label:'Complainant Middle Name',value:c=>c.complainant.middle_name},{id:'complainant-last-name',label:'Complainant Last Name',value:c=>c.complainant.last_name},{id:'complainant-gender',label:'Complainant Gender',value:c=>c.complainant.gender},{id:'complainant-birth-date',label:'Complainant Date of Birth',value:c=>c.complainant.date_of_birth},{id:'complainant-age',label:'Complainant Age',value:c=>age(c.complainant.date_of_birth)},{id:'complainant-contact',label:'Complainant Contact',value:c=>c.complainant.contact_number},{id:'complainant-house',label:'Complainant House/Building',value:c=>c.complainant.house_building_number},{id:'complainant-street',label:'Complainant Street',value:c=>c.complainant.street},{id:'complainant-barangay',label:'Complainant Barangay',value:c=>c.complainant.barangay},{id:'complainant-city',label:'Complainant City/Municipality',value:c=>c.complainant.city_municipality},{id:'complainant-region',label:'Complainant Region',value:c=>c.complainant.region},
+  {id:'respondent-first-name',label:'Respondent First Name',value:c=>c.respondent.first_name},{id:'respondent-middle-name',label:'Respondent Middle Name',value:c=>c.respondent.middle_name},{id:'respondent-last-name',label:'Respondent Last Name',value:c=>c.respondent.last_name},{id:'respondent-gender',label:'Respondent Gender',value:c=>c.respondent.gender},{id:'respondent-birth-date',label:'Respondent Date of Birth',value:c=>c.respondent.date_of_birth},{id:'respondent-age',label:'Respondent Age',value:c=>age(c.respondent.date_of_birth)},{id:'respondent-contact',label:'Respondent Contact',value:c=>c.respondent.contact_number},{id:'respondent-house',label:'Respondent House/Building',value:c=>c.respondent.house_building_number},{id:'respondent-street',label:'Respondent Street',value:c=>c.respondent.street},{id:'respondent-barangay',label:'Respondent Barangay',value:c=>c.respondent.barangay},{id:'respondent-city',label:'Respondent City/Municipality',value:c=>c.respondent.city_municipality},{id:'respondent-region',label:'Respondent Region',value:c=>c.respondent.region},
+];
+
+export const normalizeSearch = (value:string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+export const matchesCaseSearch = (item:Case, query:string) => {
+  const people=[item.complainant,item.respondent];
+  const values=[item.case_number,item.status,item.nature_of_case,item.case_description,item.place_of_incident,item.date_of_incident,item.time_of_incident,item.date_of_lupon_hearing,...people.flatMap(p=>[p.first_name,p.middle_name,p.last_name,name(p),p.gender,p.date_of_birth,p.contact_number,p.house_building_number,p.street,p.barangay,p.city_municipality,p.region])];
+  const haystack=normalizeSearch(values.join(' '));
+  return normalizeSearch(query).split(' ').filter(Boolean).every(term=>haystack.includes(term));
+};
+
+export const monthKey = (dateStr:string) => { if(!dateStr)return null; const date=new Date(dateStr); return Number.isNaN(date.getTime())?null:`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`; };
+export const monthLabel = (key:string) => { const [year,month]=key.split('-').map(Number); return new Date(year,month-1,1).toLocaleDateString('en-US',{month:'short',year:'2-digit'}); };
