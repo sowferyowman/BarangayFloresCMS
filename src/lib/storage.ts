@@ -1,5 +1,5 @@
-import type { Case, Person } from '../types'
-const KEY='bf-cases-v1', USERS='bf-users-v1', INITIALIZED='bf-production-records-initialized-v1'
+import type { Case, CaseLog, Person } from '../types'
+const KEY='bf-cases-v1', LOGS='bf-case-logs-v1', USERS='bf-users-v1', INITIALIZED='bf-production-records-initialized-v1'
 const initialPeople: Person[] = [
  ['John','Michael','Smith','Male'],['Mary','Anne','Johnson','Female'],['David','Lee','Wong','Male'],['Sarah','Elizabeth','Garcia','Female'],['Michael','James','Brown','Male'],['Emma','Grace','Anderson','Female'],['Daniel','Patrick','Martinez','Male'],['Olivia','Marie','Robinson','Female'],['Alexander','William','Taylor','Male'],['Sophia','Rose','Nguyen','Female']
 ].map(([first_name,middle_name,last_name,gender],i)=>({first_name,middle_name,last_name,gender,date_of_birth:`19${80+i}-0${(i%9)+1}-15`,contact_number:`09${String(170000000+i).padStart(9,'0')}`,house_building_number:String(101+i*11),street:['Main Street','Elm Street','Oak Avenue','Pine Street','Maple Lane','Cedar Road','Birch Boulevard','Walnut Street','Pineapple Avenue','Rizal Street'][i],barangay:['Central','Eastside','West End','Northside','Southville','Downtown','Uptown','Riverside','Islandview','Flores'][i],city_municipality:['Metroville','Townsville','Suburbia','Villageton','Hamletsville','Cityville','Villagetown','Shoretown','Beachtown','Flores'][i],region:'Region IV-A'}))
@@ -8,10 +8,15 @@ const initialCases: Case[] = [
 ].map((x,i)=>({id:1000+i,case_number:`BF-2024-${String(i+1).padStart(3,'0')}`,status:'Active',nature_of_case:x[0],place_of_incident:x[1],date_of_incident:x[2],time_of_incident:x[3],date_of_lupon_hearing:x[4],case_description:x[5],complainant:initialPeople[i],respondent:initialPeople[(i+1)%initialPeople.length],created_at:'2024-05-01T08:00:00Z'} as Case))
 const get=():Case[] => { const current=JSON.parse(localStorage.getItem(KEY) || '[]'); if(!current.length&&!localStorage.getItem(INITIALIZED)){localStorage.setItem(INITIALIZED,'1');localStorage.setItem(KEY,JSON.stringify(initialCases));return initialCases} return current.map((item:Case)=>({...item,status:item.status||'Active'})) }
 const put=(x:Case[])=>localStorage.setItem(KEY,JSON.stringify(x))
+const getLogs=():CaseLog[]=>JSON.parse(localStorage.getItem(LOGS)||'[]')
+const putLogs=(logs:CaseLog[])=>localStorage.setItem(LOGS,JSON.stringify(logs))
+const nowLog=(caseId:number,log_type:CaseLog['log_type'],title:string,description:string):CaseLog=>{const now=new Date();return{id:Date.now(),case_id:caseId,log_type,title,description,log_date:now.toISOString().slice(0,10),log_time:now.toTimeString().slice(0,5),created_at:now.toISOString()}}
 export const store={
  cases: async()=>get(),
- saveCase: async(c:Case)=>{const list=get(); if(list.some(x=>x.case_number.toLowerCase()===c.case_number.toLowerCase()&&x.id!==c.id))throw Error('A case with this number already exists.'); if(c.id){const i=list.findIndex(x=>x.id===c.id);list[i]={...c,updated_at:new Date().toISOString()}}else list.unshift({...c,id:Date.now(),created_at:new Date().toISOString()});put(list)},
- deleteCase:async(id:number)=>put(get().filter(x=>x.id!==id)),
+ saveCase: async(c:Case)=>{const list=get(); if(list.some(x=>x.case_number.toLowerCase()===c.case_number.toLowerCase()&&x.id!==c.id))throw Error('A case with this number already exists.'); if(c.id){const i=list.findIndex(x=>x.id===c.id),old=list[i];list[i]={...c,updated_at:new Date().toISOString()};if(old.status!==c.status)putLogs([...getLogs(),nowLog(c.id,'Other','Case Status Updated',`Case status changed from ${old.status} to ${c.status}.`)])}else{const id=Date.now();list.unshift({...c,id,created_at:new Date().toISOString()});putLogs([...getLogs(),nowLog(id,'Case Filed','Case Created','Case record was created.')]);}put(list)},
+ deleteCase:async(id:number)=>{put(get().filter(x=>x.id!==id));putLogs(getLogs().filter(log=>log.case_id!==id))},
+ logs:async(caseId:number)=>getLogs().filter(log=>log.case_id===caseId).sort((a,b)=>`${b.log_date} ${b.log_time}`.localeCompare(`${a.log_date} ${a.log_time}`)),
+ addLog:async(log:Omit<CaseLog,'id'|'created_at'>)=>{const entry:CaseLog={...log,id:Date.now(),created_at:new Date().toISOString()};putLogs([...getLogs(),entry]);const list=get(),index=list.findIndex(c=>c.id===log.case_id);if(index>=0&&log.status_after){list[index]={...list[index],status:log.status_after,updated_at:new Date().toISOString()};put(list)}},
  people:async()=>{const out:Person[]=[];get().forEach(c=>{out.push({...c.complainant,id:c.id,role:'complainant'},{...c.respondent,id:c.id,role:'respondent'})});return out},
  login:async(u:string,p:string)=>{const users=JSON.parse(localStorage.getItem(USERS)||'[]');if(!users.length&&u==='admin'&&p==='admin123'){localStorage.setItem(USERS,JSON.stringify([{u,p}]));return true}return users.some((x:{u:string;p:string})=>x.u===u&&x.p===p)},
  backup:()=>JSON.stringify({version:1,created_at:new Date().toISOString(),cases:get()}),

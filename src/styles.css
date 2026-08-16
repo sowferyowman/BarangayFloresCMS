@@ -12,6 +12,391 @@
   box-sizing: border-box;
 }
 
+/*Case Details Toggle*/
+.case-details-toggle {
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 11px 13px;
+  background: #edf8f5;
+  color: #087e70;
+  border: 1px solid #b8ded6;
+  justify-content: space-between;
+}
+
+.case-details-toggle:hover,
+.case-details-toggle.open {
+  background: #087e70;
+  color: #fff;
+}
+
+.case-details-toggle span {
+  font-size: 18px;
+  transition: transform .2s;
+}
+
+.case-details-toggle.open span {
+  transform: rotate(180deg);
+}
+
+.dark-mode .case-details-toggle {
+  background: #293b3d;
+  border-color: #4f7871;
+  color: #c9eee7;
+}
+
+.dark-mode .case-details-toggle.open {
+  background: #087e70;
+  color: #fff;
+}
+
+/* Use a CSS glyph so modal close controls are unaffected by text encoding. */
+.modal-head .icon-btn {
+  font-size: 0;
+}
+
+.modal-head .icon-btn::after {
+  content: "\00d7";
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+/* Case History Modal */
+.case-history-modal {
+  max-width: 760px;
+  border-radius: 16px;
+  padding: 20px 24px 24px;
+}
+
+/* Case links in the Cases table */
+.case-row {
+  cursor: pointer;
+}
+
+.case-row:hover td {
+  background: #edf8f5;
+}
+
+.case-link {
+  padding: 0;
+  background: transparent;
+  color: #087e70;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.case-link:hover {
+  background: transparent;
+  color: #075f57;
+}
+
+/* Collapsible case details header - COMPACT */
+.case-history-header {
+  background: linear-gradient(135deg, #f4fbf9, #eef8f5);
+  border: 1px solid #d8ede8;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.case-history-label {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #087e70;
+}
+
+.case-history-header h2 {
+  font-size: 17px;
+  margin: 0;
+  color: #0f2e2a;
+}
+
+.case-history-header p {
+  margin: 0;
+  color: #45615d;
+  font-size: 12px;
+}
+
+.case-history-header .status {
+  font-size: 10px;
+  padding: 3px 10px;
+}
+
+/* Case summary - COMPACT GRID */
+.case-summary {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 14px;
+}
+
+.case-summary h3,
+.case-history-section>.section-head h3 {
+  margin-bottom: 10px;
+  color: #174f49;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.case-summary .detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.case-summary .detail-item {
+  background: #f8fafc;
+  border: 1px solid #edf1f5;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 0;
+}
+
+.case-summary .detail-item span {
+  color: #64748b;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.case-summary .detail-item strong {
+  color: #1e3a67;
+  font-size: 13px;
+  display: block;
+  word-break: break-word;
+}
+
+/* Case History section header + Add Log button - COMPACT */
+.case-history-section {
+  margin-top: 4px;
+}
+
+.case-history-section>.section-head {
+  margin-bottom: 4px;
+}
+
+.case-history-section>.section-head h3 {
+  margin-bottom: 0;
+}
+
+.case-history-section>.section-head button {
+  background: #087e70;
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
+.case-history-section>.section-head button:hover {
+  background: #075f57;
+}
+
+/* Add Log inline form - COMPACT */
+.case-history-section .form-section {
+  background: #f8fafc;
+  border: 1px solid #e4eaf2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 10px 0 16px;
+}
+
+.case-history-section .form-section .form-grid {
+  grid-template-columns: 1fr 1fr 0.7fr;
+  gap: 10px;
+}
+
+.case-history-section .form-section .field {
+  margin-bottom: 0;
+}
+
+.case-history-section .form-section .field input,
+.case-history-section .form-section .field select {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Timeline - COMPACT */
+.history-timeline {
+  display: grid;
+  gap: 0;
+  margin-top: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Scrollbar styling */
+.history-timeline::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-timeline::-webkit-scrollbar-track {
+  background: #e8f1ef;
+  border-radius: 4px;
+}
+
+.history-timeline::-webkit-scrollbar-thumb {
+  background: #087e70;
+  border-radius: 4px;
+}
+
+.history-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  padding: 0 0 14px;
+}
+
+.history-entry:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: 0;
+  width: 2px;
+  background: #d8ede8;
+}
+
+.history-marker {
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: #087e70;
+  border: 2px solid #dff7f1;
+  box-shadow: 0 0 0 1px #b8ded6;
+  z-index: 1;
+}
+
+.history-entry>div:last-child {
+  background: #fff;
+  border: 1px solid #edf1f5;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 4px #0f172a06;
+  transition: box-shadow .15s, border-color .15s;
+}
+
+.history-entry>div:last-child:hover {
+  box-shadow: 0 3px 10px #0f172a10;
+  border-color: #d8ede8;
+}
+
+.history-date {
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b !important;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.history-entry h4 {
+  margin: 3px 0 2px;
+  color: #087e70;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.history-entry strong {
+  display: block;
+  color: #1e3a67;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.history-entry p {
+  margin: 2px 0;
+  color: #475569;
+  line-height: 1.4;
+  font-size: 12.5px;
+}
+
+.history-entry p b {
+  color: #174f49;
+}
+
+/* Dark mode for Case History */
+.dark-mode .case-history-header {
+  background: linear-gradient(135deg, #1c2a29, #1a2624);
+  border-color: #2f4442;
+}
+
+.dark-mode .case-history-header h2 {
+  color: #eaf6f3;
+}
+
+.dark-mode .case-history-header p {
+  color: #a9c3be;
+}
+
+.dark-mode .case-summary h3,
+.dark-mode .case-history-section>.section-head h3 {
+  color: #dce9eb;
+}
+
+.dark-mode .case-summary .detail-item {
+  background: #1c2429;
+  border-color: #3a454c;
+}
+
+.dark-mode .case-summary .detail-item strong {
+  color: #e5f2f0;
+}
+
+.dark-mode .case-history-section .form-section {
+  background: #1c2429;
+  border-color: #3a454c;
+}
+
+.dark-mode .history-entry:not(:last-child)::before {
+  background: #3a454c;
+}
+
+.dark-mode .history-marker {
+  background: #0d8878;
+  border-color: #1c2429;
+  box-shadow: 0 0 0 1px #4f7871;
+}
+
+.dark-mode .history-entry>div:last-child {
+  background: #252d33;
+  border-color: #3a454c;
+  box-shadow: 0 2px 8px #00000030;
+}
+
+.dark-mode .history-entry>div:last-child:hover {
+  border-color: #4f7871;
+}
+
+.dark-mode .history-entry strong {
+  color: #e5f2f0;
+}
+
+.dark-mode .history-entry p {
+  color: #c2d0d2;
+}
+
+.dark-mode .history-date {
+  color: #9fb5b1 !important;
+}
+
+.dark-mode .case-row:hover td {
+  background: #233230;
+}
 body {
   margin: 0;
   background: #f4f7fb;
@@ -42,7 +427,11 @@ button:disabled {
   opacity: 0.6;
 }
 
-h1, h2, h3, h4, p {
+h1,
+h2,
+h3,
+h4,
+p {
   margin-top: 0;
 }
 
@@ -149,7 +538,7 @@ aside {
   color: #fff;
 }
 
-.brand > div,
+.brand>div,
 .seal {
   width: 38px;
   height: 38px;
@@ -304,7 +693,8 @@ th {
   letter-spacing: .03em;
 }
 
-th, td {
+th,
+td {
   padding: 13px 11px;
   border-bottom: 1px solid #e7edf4;
   white-space: nowrap;
@@ -510,7 +900,7 @@ td {
 }
 
 .settings p,
-.report > p {
+.report>p {
   color: #64748b;
   line-height: 1.5;
 }
@@ -617,7 +1007,7 @@ td {
   margin-bottom: 13px;
 }
 
-.login .login-animated-title > div {
+.login .login-animated-title>div {
   justify-content: center;
   gap: 0;
   height: 34px;
@@ -662,7 +1052,7 @@ td {
   font-size: 23px;
 }
 
-.login .login-form > p {
+.login .login-form>p {
   color: #075047;
   text-align: left;
   font-size: 13px;
@@ -855,7 +1245,7 @@ td {
   }
 
   .login .login-brand p,
-  .login .login-animated-title > div {
+  .login .login-animated-title>div {
     justify-content: center !important;
     text-align: center;
   }
@@ -899,7 +1289,7 @@ td {
   gap: 10px;
 }
 
-.bar-row > span {
+.bar-row>span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1037,7 +1427,7 @@ td {
   text-decoration: underline;
 }
 
-.column-menu > button {
+.column-menu>button {
   position: relative;
   width: 100%;
   padding: 9px 14px;
@@ -1051,7 +1441,7 @@ td {
   transition: color .35s cubic-bezier(.23, 1, .32, 1);
 }
 
-.column-menu > button:before {
+.column-menu>button:before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1062,14 +1452,14 @@ td {
   transition: transform .35s cubic-bezier(.23, 1, .32, 1);
 }
 
-.column-menu > button:hover:before,
-.column-menu > button.selected:before {
+.column-menu>button:hover:before,
+.column-menu>button.selected:before {
   transform: scaleX(1);
   transform-origin: right;
 }
 
-.column-menu > button:hover,
-.column-menu > button.selected {
+.column-menu>button:hover,
+.column-menu>button.selected {
   color: #fff;
 }
 
@@ -1176,9 +1566,9 @@ td {
 .dark-mode .crumb,
 .dark-mode .stat p,
 .dark-mode .settings p,
-.dark-mode .report > p,
+.dark-mode .report>p,
 .dark-mode .empty,
-.dark-mode .bar-row > span {
+.dark-mode .bar-row>span {
   color: #b5c3c8;
 }
 
@@ -1224,7 +1614,7 @@ td {
   border-color: #4b7f76;
 }
 
-.dark-mode .column-menu > button {
+.dark-mode .column-menu>button {
   color: #d0e1de;
 }
 

@@ -30,6 +30,22 @@ export type Case = {
   updated_at?: string;
 };
 
+export type CaseLog = {
+  id: number;
+  case_id: number;
+  log_type: 'Case Filed' | 'Hearing Scheduled' | 'Lupon Hearing' | 'Mediation' | 'Settlement Discussion' | 'Follow-up' | 'Agreement / Settlement' | 'Other';
+  title: string;
+  description: string;
+  log_date: string;
+  log_time: string;
+  next_action?: string;
+  next_action_date?: string;
+  status_after?: Case['status'];
+  created_by?: string;
+  created_at: string;
+  updated_at?: string;
+};
+
 export const age = (dob: string) => {
   if (!dob) return '—';
 
