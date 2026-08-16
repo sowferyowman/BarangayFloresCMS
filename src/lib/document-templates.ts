@@ -4,6 +4,10 @@ import type { Case, CaseLog, Person } from '../types';
 import { age } from '../types';
 import { name } from './case-utils';
 
+export const reportTemplateMap: Record<string, string> = {
+  'Affidavit':'/templates/affidavit.docx','Agreement for Arbitration':'/templates/agreement-for-arbitration.docx','Amicable Settlement':'/templates/amicable-settlement.docx','Arbitration Award':'/templates/arbitration-award.docx','Case History Report':'/templates/case-history-report.docx','Certificate to Bar Action':'/templates/certificate-to-bar-action.docx','Certificate to File Action':'/templates/certificate-to-file-action.docx','Certification':'/templates/certification.docx','Complaint':'/templates/complaint.docx','List of Pangkat':'/templates/list-of-pangkat.docx','Notice of Appointment':'/templates/notice-of-appointment.docx','Notice of Hearing':'/templates/notice-of-hearing.docx','Notice to Constitute the Lupon':'/templates/notice-to-constitute-the-lupon.docx','Notice to Constitute the Pangkat':'/templates/notice-to-constitute-the-pangkat.docx','Oath of Lupon Member':'/templates/oath-of-lupon-member.docx','Official Letter':'/templates/official-letter.docx','Subpoena':'/templates/subpoena.docx','Summons':'/templates/summons.docx',
+};
+
 export type TemplateCaseData = {
   case_number:string; nature_of_case:string; case_description:string; place_of_incident:string; date_of_incident:string; time_of_incident:string; date_of_lupon_hearing:string; status:string;
   complainant: ReturnType<typeof personData>; respondent: ReturnType<typeof personData>;
